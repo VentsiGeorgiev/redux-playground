@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import counterReducer from "../features/counter-slice";
+import { postsApi } from "../posts/posts-api-slice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    [postsApi.reducerPath]: postsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(postsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
